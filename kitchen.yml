@@ -1,0 +1,51 @@
+driver:
+  name: terraform
+  command_timeout: 1800
+
+provisioner:
+  name: terraform
+
+platforms:
+- name: aws
+
+verifier:
+  name: terraform
+
+lifecycle:
+  pre_verify:
+  - local: mkdir -p test/integration/${KITCHEN_SUITE_NAME}/files
+  - local: ./.venv/bin/python3 ./.venv/bin/hcl2tojson test/fixtures/${KITCHEN_SUITE_NAME}/main.tf test/integration/${KITCHEN_SUITE_NAME}/files/main.json
+  - local: chmod +x ./lib/scripts/createo2yml.sh
+  - local: ./lib/scripts/createo2yml.sh
+
+suites:
+- name: default
+  driver:
+    root_module_directory: test/fixtures/default
+  verifier:
+    systems:
+    - name: aws
+      backend: aws
+      reporter:
+      - cli
+      - json:reports/test/data/inspec/default.json
+- name: bucket-policy
+  driver:
+    root_module_directory: test/fixtures/bucket-policy
+  verifier:
+    systems:
+    - name: aws
+      backend: aws
+      reporter:
+      - cli
+      - json:reports/test/data/inspec/bucket-policy.json
+- name: lifecycle-rule
+  driver:
+    root_module_directory: test/fixtures/lifecycle-rule
+  verifier:
+    systems:
+    - name: aws
+      backend: aws
+      reporter:
+      - cli
+      - json:reports/test/data/inspec/lifecycle-rule.json

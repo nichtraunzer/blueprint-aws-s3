@@ -1,0 +1,16 @@
+.DS_Store
+.bundle
+.kitchen
+.terraform
+.terraform.lock.hcl
+.terraform-data.json
+.vscode
+*.auto.tfvars*
+inspec.lock
+terraform.tfvars*
+terraform.tfstate*
+tfplan
+vendor
+test/integration/*/files/*.json
+test/integration/*/files/*.yml
+.venv

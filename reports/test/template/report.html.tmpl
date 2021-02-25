@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test Report for '{{ metadata.name }}'</title>
+  <link href="./template/css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="page">
+    <table id="heading">
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <th colspan="2">
+                Blueprint Information
+              </th>
+            </tr>
+            <tr>
+              <td class="lean" style="vertical-align: top;">Name:</td>
+              <td class="content-wrappable">{{ metadata.name }}</td>
+            </tr>
+            <tr>
+              <td class="lean" style="vertical-align: top;">Description:</td>
+              <td class="content-wrappable">{{ metadata.description }}</td>
+            </tr>
+            <tr>
+              <td class="lean" style="vertical-align: top;">Version:</td>
+              <td class="content-wrappable">{{ metadata.version }}</td>
+            </tr>
+            <tr>
+              <td class="lean">Date Created:</td>
+              <td class="content-wrappable">{{ metadata.date_created }}</td>
+            </tr>
+          </table>
+        </td>
+        <td id="logo" class="lean">
+          <img src="./template/images/bi_logo_155x43.gif" />
+        </td>
+      </tr>
+    </table>
+
+    <div id="blueband">&nbsp;</div>
+
+    <h1>Test Report for '{{ metadata.name }}'</h1>
+
+    <h2>Table of Contents</h2>
+    <ol class="table-of-contents">
+      <li><a href="#introduction">Introduction</a></li>
+      <ol>
+        <li><a href="#introduction-inputs">Inputs</a></li>
+        <li><a href="#introduction-outputs">Outputs</a></li>
+      </ol>
+      <li><a href="#diagnostics-and-testing">Diagnostics and Testing</a></li>
+      <li><a href="#definitions-and-abbreviations">Definitions and Abbreviations</a></li>
+      <ol>
+        <li><a href="#definitions">Definitions</a></li>
+        <li><a href="#abbreviations">Abbreviations</a></li>
+      </ol>
+      <li><a href="#reference-documents">Reference Documents</a></li>
+    </ol>
+  </div>
+
+  <div class="page">
+    <!-- Introduction -->
+    <h2 id="introduction"><span>1</span>Introduction</h2>
+
+    <p>A <em>Blueprint</em> is a configurable and reusable infrastructure-as-code artefact. Practical examples include foundational infrastructure services, such as compute, networking, and storage, but may as well be of arbitrary higher-level nature, such as an AWS Lambda function.</p>
+
+    <p>This document describes the release of the following blueprint:</p>
+
+    <table>
+      <tr>
+        <td class="header lean">Name</td>
+        <td>{{ metadata.name }}</td>
+      </tr>
+      <tr>
+        <td class="header lean">Description</td>
+        <td>{{ metadata.description }}</td>
+      </tr>
+      <tr>
+        <td class="header lean">Version</td>
+        <td>{{ metadata.version }}</td>
+      </tr>
+      <tr>
+        <td class="header lean">URL</td>
+        <td>{{ metadata.url }}</td>
+      </tr>
+      <tr>
+        <td class="header lean">Git URL</td>
+        <td>{{ metadata.git_uri }}</td>
+      </tr>
+      <tr>
+        <td class="header lean">Plan URL</td>
+        <td>tbd.</td>
+      </tr>
+      <tr>
+        <td class="header lean">Date Created</td>
+        <td>{{ metadata.date_created }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="page">
+    <!-- Introduction: Inputs -->
+    <h3 id="introduction-inputs"><span>1.1</span>Inputs</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      {{ #terraform_docs.inputs }}
+      <tr>
+        <td class="lean">{{ name }}</td>
+        <td class="content-wrappable">{{ description }}</td>
+      </tr>
+      {{ /terraform_docs.inputs }}
+    </table>
+  </div>
+
+  <div class="page">
+    <!-- Introduction: Outputs -->
+    <h3 id="introduction-outputs"><span>1.2</span>Outputs</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      {{ #terraform_docs.outputs }}
+      <tr>
+        <td class="lean">{{ name }}</td>
+        <td class="content-wrappable">{{ description }}</td>
+      </tr>
+      {{ /terraform_docs.outputs }}
+    </table>
+  </div>
+
+  <!-- Diagnostics and Testing -->
+  <h1 id="diagnostics-and-testing"><span>2</span>Diagnostics and Testing</h1>
+
+  <p>This section documents the results of comparing the actual state of a live blueprint deployment against a desired state.</p>
+  <p>The values used to test the blueprint are for testing purposes only.</p>
+
+  {{ #inspec.profiles}}
+  {{ #controls}}
+  <div class="page">
+    <h2>{{ title }}</h5>
+    <p>{{ desc }}</p>
+
+    <table>
+      <tr>
+        <th>Description / Expected Result</th>
+        <th class="lean">Start Time</th>
+        <th class="lean">Status</th>
+      </tr>
+      {{ #results }}
+      <tr>
+        <td class="content-wrappable">{{ code_desc }}</td>
+        <td class="right">{{ start_time }}</td>
+        <td class="center">{{ status }}</td>
+      </tr>
+      {{ /results }}
+    </table>
+
+    <table class="results">
+      <tr>
+        <td class="lean"><strong>Actual Results</strong></td>
+        <td>All tests successful (no deviations or failures).</td>
+        <td class="lean">
+          <input type="checkbox" checked="checked" /><label>Pass</label><br/>
+          <input type="checkbox" disabled="disabled" /><label>Fail</label>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Comments:</strong></td>
+        <td colspan="2"><em>n/a</em></td>
+      </tr>
+    </table>
+  </div>
+  {{ /controls }}
+  {{ /inspec.profiles }}
+
+  <div class="page">
+    <!-- Definitions and Abbreviations -->
+    <h1 id="definitions-and-abbreviations"><span>3</span>Definitions and Abbreviations</h1>
+
+    <!-- Definitions and Abbreviations: Definitions -->
+    <h2 id="definitions"><span>3.1</span>Definitions</h2>
+
+    <table>
+      <tr>
+        <th class="lean">Term</th>
+        <th>Definition</th>
+      </tr>
+      <tr>
+        <td>Git</td>
+        <td class="content-wrappable">A distributed version control system, e.g., Bitbucket, GitHub, and GitLab.</td>
+      </tr>
+    </table>
+
+    <!-- Definitions and Abbreviations: Abbreviations -->
+    <h2 id="abbreviations"><span>3.2</span>Abbreviations</h2>
+
+    <table>
+      <tr>
+        <th class="lean">Abbreviation</th>
+        <th>Meaning</th>
+      </tr>
+      <tr>
+        <td>URL</td>
+        <td class="content-wrappable">A uniform resource locator (URL) is the address of a resource on the Internet.</td>
+      </tr>
+    </table>
+
+    <p>See to <a href="https://docs.aws.amazon.com/general/latest/gr/glos-chap.html">https://docs.aws.amazon.com/general/latest/gr/glos-chap.html</a> for a list of AWS-specific definitions and abbreviations.</p>
+
+    <!-- Reference Documents -->
+    <h1 id="reference-documents"><span>4</span>Reference Documents</h2>
+
+    <table>
+      <tr>
+        <th class="lean">Document ID</th>
+        <th style="width: 100%;">Name</th>
+      </tr>
+      <tr>
+        <td class="right"><em>n/a</em></td>
+        <td><em>n/a</em></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
